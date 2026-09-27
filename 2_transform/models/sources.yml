@@ -1,0 +1,99 @@
+version: 2
+
+sources:
+  - name: raw
+    description: Physical raw tables loaded from CSV by the Python ingestion layer. All business columns are text.
+    schema: public
+    tables:
+      - name: raw_customer
+        description: Raw customer attributes from customer.csv and customer_additional.csv.
+        tests:
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: "(age is null or btrim(age) = '' or (age ~ '^-?[0-9]+$' and age::integer >= 0))"
+              config:
+                severity: warn
+        columns:
+          - name: csv_row_index
+            description: Original unnamed pandas-style row index from the CSV; not a business key.
+          - name: customer_id
+            description: Customer identifier (e.g. CUS-2895).
+            tests:
+              - not_null
+          - name: age
+            description: Customer age as text from source.
+          - name: region
+            description: Customer region as text from source.
+          - name: loaded_at
+            description: Timestamp when this file batch was loaded.
+            tests:
+              - not_null
+          - name: source_file
+            description: Basename of the source CSV file.
+            tests:
+              - not_null
+
+      - name: raw_policy
+        description: Raw policy attributes from policy.csv and policy_additional.csv.
+        tests:
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: "(coverage_amount is null or btrim(coverage_amount) = '' or (coverage_amount ~ '^-?[0-9]+(\\.[0-9]+)?$' and coverage_amount::numeric >= 0))"
+              config:
+                severity: warn
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: "(premium_amount is null or btrim(premium_amount) = '' or (premium_amount ~ '^-?[0-9]+(\\.[0-9]+)?$' and premium_amount::numeric >= 0))"
+              config:
+                severity: warn
+        columns:
+          - name: csv_row_index
+            description: Original unnamed CSV row index; not a business key.
+          - name: customer_id
+            description: Customer who owns the policy.
+            tests:
+              - not_null
+          - name: policy_id
+            description: Policy identifier.
+            tests:
+              - not_null
+          - name: coverage_amount
+            description: Coverage amount as text.
+          - name: policy_type
+            description: Python-literal-like dict string with type and brand.
+          - name: premium_amount
+            description: Premium amount as text.
+          - name: loaded_at
+            description: Timestamp when this file batch was loaded.
+            tests:
+              - not_null
+          - name: source_file
+            description: Basename of the source CSV file.
+            tests:
+              - not_null
+
+      - name: raw_event
+        description: Raw policy events from event.csv and event_additional.csv.
+        columns:
+          - name: csv_row_index
+            description: Original unnamed CSV row index; not a business key.
+          - name: policy_id
+            description: Policy the event belongs to.
+            tests:
+              - not_null
+          - name: event_timestamp
+            description: Event time as text from source.
+            tests:
+              - not_null
+          - name: event_type
+            description: Event type (purchase, claim, renewal, cancellation).
+            tests:
+              - not_null
+          - name: loaded_at
+            description: Timestamp when this file batch was loaded.
+            tests:
+              - not_null
+          - name: source_file
+            description: Basename of the source CSV file.
+            tests:
+              - not_null

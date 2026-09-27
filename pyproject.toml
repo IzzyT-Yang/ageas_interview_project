@@ -1,0 +1,14 @@
+[project]
+name = "insure4all"
+version = "0.1.0"
+description = "Insure4All analytics pipeline: CSV load + dbt transforms"
+requires-python = ">=3.10"
+dependencies = [
+    "psycopg[binary]>=3.1",
+    "PyYAML>=6.0",
+    "dbt-postgres>=1.8,<1.10",
+    "pandas>=2.3.3",
+]
+
+[tool.uv]
+package = false

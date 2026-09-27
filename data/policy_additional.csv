@@ -1,0 +1,45 @@
+,customer_id,policy_id,coverage_amount,policy_type,premium_amount
+0,CUS-4973,POL-736241,87857.29,"{'type': 'auto', 'brand': 'SafeGuard'}",1845.47
+1,CUS-2038,253347,33236.02,"{'type': 'life', 'brand': 'ProtectPlus'}",5636.53
+2,CUS-3217,POL-886368,53245.72,"{'type': 'life', 'brand': 'InsureCorp'}",2850.95
+3,CUS-5366,POL-482375,77498.97,"{'type': 'auto ', 'brand': 'SafeGuard'}",50000.0
+4,CUS-6732,POL-396220,23503.89,"{'type': 'life', 'brand': 'ProtectPlus'}",3357.37
+5,CUS-2038,POL-675743,95979.56,"{'type': 'life', 'brand': 'LifeSecure'}",5532.74
+6,CUS-6540,POL-392413,91514.69,"{'type': 'health', 'brand': 'ProtectPlus'}",2749.65
+7,CUS-9052,POL-876252,88373.67,"{'type': 'life', 'brand': 'ProtectPlus'}",7095.73
+8,CUS-4938,POL-855609,50543.87,"{'type': 'life', 'brand': 'LifeSecure'}",845.48
+9,CUS-4973,POL-891377,12090.02,"{'type': 'health', 'brand': 'ProtectPlus'}",1444.24
+10,CUS-5366,POL-910356,94538.82,"{'type': 'auto ', 'brand': 'SafeGuard'}",1002.92
+11,CUS-9090,POL-860763,47089.9,"{'type': 'life', 'brand': 'LifeSecure'}",4818.76
+12,CUS-8392,POL-503425,43664.0,"{'type': 'life', 'brand': 'LifeSecure'}",3779.0
+13,CUS-3217,POL-587856,34034.11,"{'type': 'health', 'brand': 'ProtectPlus'}",2827.48
+14,CUS-6210,POL-886933,22842.32,"{'type': 'auto ', 'brand': 'SafeGuard'}",3179.19
+15,CUS-9941,POL-679274,26846.71,"{'type': 'health', 'brand': 'ProtectPlus'}",6336.46
+16,CUS-8392,POL-971291,89421.68,"{'type': 'life', 'brand': 'LifeSecure'}",7289.59
+17,CUS-9052,POL-377605,65938.41,"{'type': 'life', 'brand': 'LifeSecure'}",4530.92
+18,CUS-9941,POL-482582,17215.58,"{'type': 'life', 'brand': 'LifeSecure'}",7447.29
+19,CUS-2900,POL-969129,94642.47,"{'type': 'health', 'brand': 'ProtectPlus'}",6107.41
+20,CUS-8546,POL-567983,66372.95,"{'type': 'auto', 'brand': 'InsureCorp'}",3218.98
+21,CUS-9941,POL-779553,62792.47,"{'type': 'auto', 'brand': 'SafeGuard'}",210.28
+22,CUS-8392,POL-223649,43609.07,"{'type': 'health', 'brand': 'InsureCorp'}",6913.9
+23,CUS-9149,POL-633634,57356.59,"{'type': 'life', 'brand': 'ProtectPlus'}",4817.46
+24,CUS-8754,POL-121861,78712.99,"{'type': 'life', 'brand': 'LifeSecure'}",398.42
+25,CUS-6540,POL-819109,75773.1,"{'type': 'health', 'brand': 'ProtectPlus'}",442.53
+26,CUS-2038,POL-502641,84278.42,"{'type': None, 'brand': 'LifeSecure'}",4006.46
+27,CUS-5489,POL-894281,93608.2,"{'type': 'life', 'brand': 'LifeSecure'}",899.16
+28,CUS-4938,POL-447892,50133.55,"{'type': None, 'brand': 'SafeGuard'}",3368.54
+29,CUS-9941,POL-040351,65726.6,"{'type': 'life', 'brand': 'LifeSecure'}",4104.2
+30,CUS-5489,POL-597991,20722.54,"{'type': 'auto ', 'brand': 'SafeGuard'}",4249.52
+31,CUS-9149,POL-335051,31747.87,"{'type': 'life', 'brand': 'LifeSecure'}",3768.86
+32,CUS-6540,POL-171211,61696.64,"{'type': 'life', 'brand': 'LifeSecure'}",7249.1
+33,CUS-5366,POL-668715,93358.63,"{'type': 'life', 'brand': 'ProtectPlus'}",553.89
+34,CUS-2900,POL-976929,31395.22,"{'type': 'home', 'brand': 'SafeGuard'}",7265.36
+35,CUS-2038,POL-368442,44335.22,"{'type': 'life', 'brand': 'LifeSecure'}",886.22
+36,CUS-5489,POL-370424,84026.87,"{'type': 'home', 'brand': 'SafeGuard'}",5221.6
+37,CUS-6026,POL-228732,42993.97,"{'type': 'life', 'brand': 'LifeSecure'}",1313.59
+38,CUS-8109,POL-453463,54046.16,"{'type': 'auto', 'brand': 'SafeGuard'}",1385.72
+39,CUS-6026,POL-940406,27669.22,"{'type': 'health', 'brand': 'ProtectPlus'}",6425.19
+40,CUS-9149,POL-951576,84374.31,"{'type': 'home', 'brand': 'InsureCorp'}",
+41,CUS-5366,POL-884380,68747.99,"{'type': 'health', 'brand': 'ProtectPlus'}",4130.68
+42,CUS-5366,POL-714950,49877.32,"{'type': 'life', 'brand': 'ProtectPlus'}",6842.72
+43,CUS-2900,POL-110046,65143.31,"{'type': 'home', 'brand': 'SafeGuard'}",4221.38

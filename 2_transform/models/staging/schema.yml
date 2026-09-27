@@ -1,0 +1,116 @@
+version: 2
+
+models:
+  - name: stg_customer
+    description: Cleaned customers — one row per customer_id after merge of main and additional files.
+    columns:
+      - name: customer_id
+        description: Primary key — unique customer identifier.
+        tests:
+          - not_null
+          - unique
+      - name: age
+        description: Customer age as integer; empty or negative source values become null.
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 120
+                inclusive: true
+      - name: region
+        description: Customer region.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['East', 'West', 'North', 'South', 'London']
+      - name: loaded_at
+        description: Load timestamp of the winning source row.
+      - name: source_file
+        description: Source file of the winning row after deduplication.
+
+  - name: stg_policy
+    description: Cleaned policies with brand and product_type parsed from policy_type.
+    columns:
+      - name: customer_id
+        description: Customer who owns the policy.
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_customer')
+                field: customer_id
+              config:
+                severity: warn
+      - name: policy_id
+        description: Primary key — unique policy identifier.
+        tests:
+          - not_null
+          - unique
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: "~ '^(POL-)?[0-9]+$'"
+      - name: coverage_amount
+        description: Coverage amount; sentinel -2147483649 becomes null.
+      - name: premium_amount
+        description: Premium amount; empty source values become null.
+      - name: brand
+        description: Insurance brand parsed from policy_type.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['InsureCorp', 'LifeSecure', 'SafeGuard', 'ProtectPlus']
+      - name: product_type
+        description: Product type (trimmed); null when source type was None.
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['life', 'health', 'auto', 'home']
+              config:
+                where: "product_type is not null"
+      - name: loaded_at
+        description: Load timestamp of the winning source row.
+      - name: source_file
+        description: Source file of the winning row after deduplication.
+
+  - name: stg_event
+    description: Cleaned policy events — one row per (policy_id, event_timestamp) after dedup; typed timestamps and surrogate key.
+    columns:
+      - name: event_sk
+        description: Surrogate primary key — hash of policy_id + event_timestamp.
+        tests:
+          - not_null
+          - unique
+      - name: policy_id
+        description: Policy the event belongs to.
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_policy')
+                field: policy_id
+              config:
+                severity: warn
+      - name: event_timestamp
+        description: Event time (timezone-naive).
+        tests:
+          - not_null
+      - name: event_type
+        description: Event classification.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['purchase', 'claim', 'renewal', 'cancellation']
+      - name: loaded_at
+        description: Load timestamp of the winning source row.
+      - name: source_file
+        description: Source file of the winning row after deduplication.
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - policy_id
+              - event_timestamp
+

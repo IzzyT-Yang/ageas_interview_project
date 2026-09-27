@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+2_transform/target/
+2_transform/dbt_packages/
+2_transform/logs/
+2_transform/.user.yml
+.cursor/
+.vscode/
+logs/
+__test.sql
+.DS_Store

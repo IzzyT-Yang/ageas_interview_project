@@ -1,0 +1,128 @@
+version: 2
+
+models:
+  - name: mart_monthly_sales_by_brand_type
+    description: Monthly sales (purchase events) per brand and product type, with premium sums.
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: sales_month
+        description: Calendar month of the purchase event (first day of month).
+        data_type: date
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: brand
+        description: Insurance brand.
+        data_type: text
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: product_type
+        description: Product type; null source types coalesced to unknown.
+        data_type: text
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: sale_count
+        description: Number of purchase events in the grain.
+        data_type: bigint
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: premium_amount_sum
+        description: Sum of non-null premiums for those purchases.
+        data_type: numeric(18, 2)
+  - name: mart_claims_by_region
+    description: Monthly claim counts by customer region. Overall claims-per-region is a rollup of claim_count over months.
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: claim_month
+        description: Calendar month of the claim event.
+        data_type: date
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: region
+        description: Customer region.
+        data_type: text
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: claim_count
+        description: Number of claim events.
+        data_type: bigint
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - claim_month
+              - region
+
+  - name: mart_monthly_retention_by_brand_type
+    description: >
+      Monthly policy-level retention by brand and product type.
+      retention_rate = renewal_count / (renewal_count + cancellation_count).
+      When both event types occur in the same month for a policy, the later timestamp wins.
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: retention_month
+        description: Calendar month of the retention classification.
+        data_type: date
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: brand
+        description: Insurance brand.
+        data_type: text
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: product_type
+        description: Product type; null source types coalesced to unknown.
+        data_type: text
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: renewal_count
+        description: Policies classified as renewal in the grain.
+        data_type: bigint
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: cancellation_count
+        description: Policies classified as cancellation in the grain.
+        data_type: bigint
+        constraints:
+          - type: not_null
+        tests:
+          - not_null
+      - name: retention_rate
+        description: renewal_count / (renewal_count + cancellation_count).
+        data_type: numeric(18, 6)
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - retention_month
+              - brand
+              - product_type
